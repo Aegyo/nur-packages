@@ -8,7 +8,7 @@
 
 { pkgs ? import <nixpkgs> { } }:
 
-{
+rec {
   # The `lib`, `modules`, and `overlay` names are special
   lib = import ./lib { inherit pkgs; }; # functions
   modules = import ./modules; # NixOS modules
@@ -16,6 +16,12 @@
 
   example-package = pkgs.callPackage ./pkgs/example-package { };
   otrecorder = pkgs.callPackage ./pkgs/otrecorder { };
+  natto-py = pkgs.python3.pkgs.callPackage ./pkgs/natto-py { };
+  openepub = pkgs.python3.pkgs.callPackage ./pkgs/openepub { };
+  lute3 = pkgs.callPackage ./pkgs/lute3 {
+    inherit natto-py openepub;
+  };
+
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
